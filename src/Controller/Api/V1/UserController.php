@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Service\EntityPreprocessor;
 use Doctrine\Persistence\ManagerRegistry;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -27,6 +28,7 @@ class UserController extends AbstractController
         return $this->json($user);
     }
 
+    #[IsGranted('ROLE_ROOT')]
     #[Route('new', name: 'new', methods: ['POST'])]
     public function new(
         Request $request,
@@ -47,6 +49,7 @@ class UserController extends AbstractController
         return $this->json($user);
     }
 
+    #[IsGranted('ROLE_ROOT')]
     #[Route('{id}', name: 'edit', methods: ['PATCH'])]
     public function edit(
         User $user,
@@ -64,6 +67,7 @@ class UserController extends AbstractController
         return $this->json($user);
     }
 
+    #[IsGranted('ROLE_ROOT')]
     #[Route('{id}', name: 'delete', methods: ['DELETE'])]
     public function delete(User $user, ManagerRegistry $doctrine): JsonResponse
     {

@@ -2,6 +2,7 @@
 
 namespace App\Serializer;
 
+use App\Exception\ValidationException;
 use Symfony\Component\ErrorHandler\Exception\FlattenException;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
@@ -13,6 +14,10 @@ class ProblemNormalizer implements NormalizerInterface
             'code' => $object->getStatusCode(),
             'message' => $object->getMessage(),
         ];
+
+        if (isset($context['exception']) && $context['exception'] instanceof ValidationException) {
+            $data['errors'] = $context['exception']->getErrors();
+        }
 
         if ($context['debug'] ?? false) {
             $data['class'] = $object->getClass();

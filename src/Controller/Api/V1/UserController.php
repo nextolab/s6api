@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/api/v1/users/', name: 'user_')]
+#[Route('/api/v1/users', name: 'user_')]
 class UserController extends AbstractController
 {
     #[Route('', name: 'list', methods: ['GET'])]
@@ -22,14 +22,14 @@ class UserController extends AbstractController
         return $this->json($userRepository->findAll());
     }
 
-    #[Route('{id}', name: 'show', methods: ['GET'])]
+    #[Route('/{id}', name: 'show', methods: ['GET'])]
     public function show(User $user): JsonResponse
     {
         return $this->json($user);
     }
 
     #[IsGranted('ROLE_ROOT')]
-    #[Route('new', name: 'new', methods: ['POST'])]
+    #[Route('', name: 'new', methods: ['POST'])]
     public function new(
         Request $request,
         EntityPreprocessor $preprocessor,
@@ -50,7 +50,7 @@ class UserController extends AbstractController
     }
 
     #[IsGranted('ROLE_ROOT')]
-    #[Route('{id}', name: 'edit', methods: ['PATCH'])]
+    #[Route('/{id}', name: 'edit', methods: ['PATCH'])]
     public function edit(
         User $user,
         Request $request,
@@ -68,7 +68,7 @@ class UserController extends AbstractController
     }
 
     #[IsGranted('ROLE_ROOT')]
-    #[Route('{id}', name: 'delete', methods: ['DELETE'])]
+    #[Route('/{id}', name: 'delete', methods: ['DELETE'])]
     public function delete(User $user, ManagerRegistry $doctrine): JsonResponse
     {
         $entityManager = $doctrine->getManager();

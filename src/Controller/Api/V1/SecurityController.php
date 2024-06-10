@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/api/v1/', name: 'security_')]
+#[Route('/api/v1', name: 'security_')]
 class SecurityController extends AbstractController
 {
     #[Route('', name: 'ping', methods: ['GET'])]
@@ -21,25 +21,25 @@ class SecurityController extends AbstractController
         ]);
     }
 
-    #[Route('login', name: 'login', methods: ['POST'])]
+    #[Route('/login', name: 'login', methods: ['POST'])]
     public function login(): JsonResponse
     {
         return $this->json($this->getUser());
     }
 
-    #[Route('logout', name: 'logout', methods: ['POST'])]
+    #[Route('/logout', name: 'logout', methods: ['POST'])]
     public function logout(): void
     {
         // it will never be executed!
     }
 
-    #[Route('profile', name: 'profile', methods: ['GET'])]
+    #[Route('/profile', name: 'profile', methods: ['GET'])]
     public function profile(): JsonResponse
     {
         return $this->json($this->getUser());
     }
 
-    #[Route('password', name: 'password', methods: ['POST'])]
+    #[Route('/password', name: 'password', methods: ['POST'])]
     public function changePassword(
         Request $request,
         UserPasswordHasherInterface $passwordHasher,
